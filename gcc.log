@@ -1,0 +1,1254 @@
+bcc@bcc-server:~/litmus-tests-riscv$ make hw-tests CORES=4 GCC=riscv64-gnu-elf-gcc
+rm -rf gcc-tests gcc.excl
+# First we check if we are able to generate and build the MP test (sanity)
+make gcc-tests/MP-src || { echo "Error: Something went worng while trying to run litmus"; exit 1; }
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv'
+mkdir -p gcc-tests/MP-src
+litmus7 -mach ./riscv.cfg -avail 4 -o gcc-tests/MP-src tests/non-mixed-size/BASIC_2_THREAD/MP.litmus
+make[1]: Leaving directory '/home/bcc/litmus-tests-riscv'
+make gcc-tests/MP-src/run.exe || { echo "Error: Something went worng while trying to build the litmus generated program"; exit 1; }
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv'
+make -C gcc-tests/MP-src clean
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+/bin/rm -f *.o *.s *.t *.exe *~ obj MP.h
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+make -C gcc-tests/MP-src
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+riscv64-gnu-elf-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c affinity.c
+make[2]: riscv64-gnu-elf-gcc: Command not found
+make[2]: *** [Makefile:19: affinity.o] Error 127
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+make[1]: *** [Makefile:195: gcc-tests/MP-src/run.exe] Error 2
+make[1]: Leaving directory '/home/bcc/litmus-tests-riscv'
+Error: Something went worng while trying to build the litmus generated program
+make: *** [Makefile:212: gcc.excl] Error 1
+bcc@bcc-server:~/litmus-tests-riscv$ riscv64-
+riscv64-linux-gnu-addr2line        riscv64-linux-gnu-gcov-9           riscv64-unknown-elf-addr2line      riscv64-unknown-elf-gdb
+riscv64-linux-gnu-ar               riscv64-linux-gnu-gcov-dump        riscv64-unknown-elf-ar             riscv64-unknown-elf-gdb-add-index
+riscv64-linux-gnu-as               riscv64-linux-gnu-gcov-dump-9      riscv64-unknown-elf-as             riscv64-unknown-elf-gprof
+riscv64-linux-gnu-c++filt          riscv64-linux-gnu-gcov-tool        riscv64-unknown-elf-c++            riscv64-unknown-elf-ld
+riscv64-linux-gnu-cpp              riscv64-linux-gnu-gcov-tool-9      riscv64-unknown-elf-c++filt        riscv64-unknown-elf-ld.bfd
+riscv64-linux-gnu-cpp-9            riscv64-linux-gnu-gprof            riscv64-unknown-elf-cpp            riscv64-unknown-elf-lto-dump
+riscv64-linux-gnu-elfedit          riscv64-linux-gnu-ld               riscv64-unknown-elf-elfedit        riscv64-unknown-elf-nm
+riscv64-linux-gnu-gcc              riscv64-linux-gnu-ld.bfd           riscv64-unknown-elf-g++            riscv64-unknown-elf-objcopy
+riscv64-linux-gnu-gcc-9            riscv64-linux-gnu-nm               riscv64-unknown-elf-gcc            riscv64-unknown-elf-objdump
+riscv64-linux-gnu-gcc-ar           riscv64-linux-gnu-objcopy          riscv64-unknown-elf-gcc-12.0.1     riscv64-unknown-elf-ranlib
+riscv64-linux-gnu-gcc-ar-9         riscv64-linux-gnu-objdump          riscv64-unknown-elf-gcc-ar         riscv64-unknown-elf-readelf
+riscv64-linux-gnu-gcc-nm           riscv64-linux-gnu-ranlib           riscv64-unknown-elf-gcc-nm         riscv64-unknown-elf-run
+riscv64-linux-gnu-gcc-nm-9         riscv64-linux-gnu-readelf          riscv64-unknown-elf-gcc-ranlib     riscv64-unknown-elf-size
+riscv64-linux-gnu-gcc-ranlib       riscv64-linux-gnu-size             riscv64-unknown-elf-gcov           riscv64-unknown-elf-strings
+riscv64-linux-gnu-gcc-ranlib-9     riscv64-linux-gnu-strings          riscv64-unknown-elf-gcov-dump      riscv64-unknown-elf-strip
+riscv64-linux-gnu-gcov             riscv64-linux-gnu-strip            riscv64-unknown-elf-gcov-tool
+bcc@bcc-server:~/litmus-tests-riscv$ riscv64-linux-gnu-
+riscv64-linux-gnu-addr2line     riscv64-linux-gnu-gcc           riscv64-linux-gnu-gcc-ranlib-9  riscv64-linux-gnu-gprof         riscv64-linux-gnu-readelf
+riscv64-linux-gnu-ar            riscv64-linux-gnu-gcc-9         riscv64-linux-gnu-gcov          riscv64-linux-gnu-ld            riscv64-linux-gnu-size
+riscv64-linux-gnu-as            riscv64-linux-gnu-gcc-ar        riscv64-linux-gnu-gcov-9        riscv64-linux-gnu-ld.bfd        riscv64-linux-gnu-strings
+riscv64-linux-gnu-c++filt       riscv64-linux-gnu-gcc-ar-9      riscv64-linux-gnu-gcov-dump     riscv64-linux-gnu-nm            riscv64-linux-gnu-strip
+riscv64-linux-gnu-cpp           riscv64-linux-gnu-gcc-nm        riscv64-linux-gnu-gcov-dump-9   riscv64-linux-gnu-objcopy
+riscv64-linux-gnu-cpp-9         riscv64-linux-gnu-gcc-nm-9      riscv64-linux-gnu-gcov-tool     riscv64-linux-gnu-objdump
+riscv64-linux-gnu-elfedit       riscv64-linux-gnu-gcc-ranlib    riscv64-linux-gnu-gcov-tool-9   riscv64-linux-gnu-ranlib
+bcc@bcc-server:~/litmus-tests-riscv$ riscv64-linux-gnu-gcc
+riscv64-linux-gnu-gcc           riscv64-linux-gnu-gcc-ar        riscv64-linux-gnu-gcc-nm        riscv64-linux-gnu-gcc-ranlib
+riscv64-linux-gnu-gcc-9         riscv64-linux-gnu-gcc-ar-9      riscv64-linux-gnu-gcc-nm-9      riscv64-linux-gnu-gcc-ranlib-9
+bcc@bcc-server:~/litmus-tests-riscv$ which riscv64-linux-gnu-gcc
+/usr/bin/riscv64-linux-gnu-gcc
+bcc@bcc-server:~/litmus-tests-riscv$ make hw-tests CORES=4 GCC=riscv64-linux-gnu-gcc
+rm -rf gcc-tests gcc.excl
+# First we check if we are able to generate and build the MP test (sanity)
+make gcc-tests/MP-src || { echo "Error: Something went worng while trying to run litmus"; exit 1; }
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv'
+mkdir -p gcc-tests/MP-src
+litmus7 -mach ./riscv.cfg -avail 4 -o gcc-tests/MP-src tests/non-mixed-size/BASIC_2_THREAD/MP.litmus
+make[1]: Leaving directory '/home/bcc/litmus-tests-riscv'
+make gcc-tests/MP-src/run.exe || { echo "Error: Something went worng while trying to build the litmus generated program"; exit 1; }
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv'
+make -C gcc-tests/MP-src clean
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+/bin/rm -f *.o *.s *.t *.exe *~ obj MP.h
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+make -C gcc-tests/MP-src
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c affinity.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c outs.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c utils.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c litmus_rand.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c topology.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP.c
+awk -f show.awk MP.s > MP.t
+sh toh.sh MP.t > MP.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP.o MP.c
+sed -e 's|.c$|.o|g' < src > obj
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o run.o run.c
+riscv64-linux-gnu-gcc  -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -o run.exe affinity.o outs.o utils.o litmus_rand.o topology.o @obj run.o
+rm MP.s MP.t
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/MP-src'
+make[1]: Leaving directory '/home/bcc/litmus-tests-riscv'
+{ echo "# $(riscv64-linux-gnu-gcc --version | head -1)";\
+  echo "# tests with l{b|h|w|d}.aq[.rl] or s{b|h|w|d}[.aq].rl instruction:";\
+  msort7 -d tests/non-mixed-size/@all | grep '^[^\#]' | xargs grep -li -e l[bhwd]\.aq -e l[bhwd]\.aq\.rl -e s[bhwd]\.rl -e s[bhwd]\.aq\.rl | sed -e 's|.*/||' -e 's|\.litmus||';\
+} > gcc.excl
+# Check individual instructions
+make gcc-tests/fence.tso-src/run.exe || {\
+  echo "# tests with fence.tso instruction:";\
+  msort7 -d tests/non-mixed-size/@all | grep '^[^\#]' | xargs grep -li -F fence.tso | sed -e 's|.*/||' -e 's|\.litmus||';\
+} >> gcc.excl
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv'
+mkdir -p gcc-tests/fence.tso-src
+litmus7 -mach ./riscv.cfg -avail 4 -o gcc-tests/fence.tso-src tests/non-mixed-size/SINGLE_INST/fence.tso.litmus
+make -C gcc-tests/fence.tso-src clean
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/fence.tso-src'
+/bin/rm -f *.o *.s *.t *.exe *~ obj fence.tso.h
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/fence.tso-src'
+make -C gcc-tests/fence.tso-src
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/fence.tso-src'
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c affinity.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c outs.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c utils.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c litmus_rand.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c topology.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S fence.tso.c
+awk -f show.awk fence.tso.s > fence.tso.t
+sh toh.sh fence.tso.t > fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o fence.tso.o fence.tso.c
+sed -e 's|.c$|.o|g' < src > obj
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o run.o run.c
+riscv64-linux-gnu-gcc  -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -o run.exe affinity.o outs.o utils.o litmus_rand.o topology.o @obj run.o
+rm fence.tso.s fence.tso.t
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/fence.tso-src'
+make[1]: Leaving directory '/home/bcc/litmus-tests-riscv'
+make gcc-tests/amoswap.w.aq.rl-src/run.exe || {\
+  echo "# tests with amo*.{w|d}.aq.rl instructions:";\
+  msort7 -d tests/non-mixed-size/@all | grep '^[^\#]' | xargs grep -li amo[^[:space:]]*\.[wd]\.aq\.rl | sed -e 's|.*/||' -e 's|\.litmus||';\
+} >> gcc.excl
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv'
+mkdir -p gcc-tests/amoswap.w.aq.rl-src
+litmus7 -mach ./riscv.cfg -avail 4 -o gcc-tests/amoswap.w.aq.rl-src tests/non-mixed-size/SINGLE_INST/amoswap.w.aq.rl.litmus
+make -C gcc-tests/amoswap.w.aq.rl-src clean
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/amoswap.w.aq.rl-src'
+/bin/rm -f *.o *.s *.t *.exe *~ obj amoswap.w.aq.rl.h
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/amoswap.w.aq.rl-src'
+make -C gcc-tests/amoswap.w.aq.rl-src
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/amoswap.w.aq.rl-src'
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c affinity.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c outs.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c utils.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c litmus_rand.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c topology.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S amoswap.w.aq.rl.c
+awk -f show.awk amoswap.w.aq.rl.s > amoswap.w.aq.rl.t
+sh toh.sh amoswap.w.aq.rl.t > amoswap.w.aq.rl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o amoswap.w.aq.rl.o amoswap.w.aq.rl.c
+sed -e 's|.c$|.o|g' < src > obj
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o run.o run.c
+riscv64-linux-gnu-gcc  -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -o run.exe affinity.o outs.o utils.o litmus_rand.o topology.o @obj run.o
+rm amoswap.w.aq.rl.s amoswap.w.aq.rl.t
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/amoswap.w.aq.rl-src'
+make[1]: Leaving directory '/home/bcc/litmus-tests-riscv'
+make gcc-tests/lr.w.aq.rl-src/run.exe || {\
+  echo "# tests with {lr|sc}.{w|d}.aq.rl instruction:";\
+  msort7 -d tests/non-mixed-size/@all | grep '^[^\#]' | xargs grep -li -e lr\.[wd]\.aq\.rl -e sc\.[wd]\.aq\.rl | sed -e 's|.*/||' -e 's|\.litmus||';\
+} >> gcc.excl
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv'
+mkdir -p gcc-tests/lr.w.aq.rl-src
+litmus7 -mach ./riscv.cfg -avail 4 -o gcc-tests/lr.w.aq.rl-src tests/non-mixed-size/SINGLE_INST/lr.w.aq.rl.litmus
+make -C gcc-tests/lr.w.aq.rl-src clean
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/lr.w.aq.rl-src'
+/bin/rm -f *.o *.s *.t *.exe *~ obj lr.w.aq.rl.h
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/lr.w.aq.rl-src'
+make -C gcc-tests/lr.w.aq.rl-src
+make[2]: Entering directory '/home/bcc/litmus-tests-riscv/gcc-tests/lr.w.aq.rl-src'
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c affinity.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c outs.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c utils.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c litmus_rand.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c topology.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S lr.w.aq.rl.c
+awk -f show.awk lr.w.aq.rl.s > lr.w.aq.rl.t
+sh toh.sh lr.w.aq.rl.t > lr.w.aq.rl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o lr.w.aq.rl.o lr.w.aq.rl.c
+sed -e 's|.c$|.o|g' < src > obj
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o run.o run.c
+riscv64-linux-gnu-gcc  -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -o run.exe affinity.o outs.o utils.o litmus_rand.o topology.o @obj run.o
+rm lr.w.aq.rl.s lr.w.aq.rl.t
+make[2]: Leaving directory '/home/bcc/litmus-tests-riscv/gcc-tests/lr.w.aq.rl-src'
+make[1]: Leaving directory '/home/bcc/litmus-tests-riscv'
+msort7 -d tests/non-mixed-size/@all | grep '^[^#]' | xargs awk '/P0/ {x=1;next;} /[^;]$/ {x=0;next;} x==1 {print $0}' | tr '[:upper:]|' '[:lower:]\n' | awk '{print $1}' | sed '/.*:$/d; s/;$//; /^[[:space:]]*$/d' | sort -u | awk '{print "#",$0}' > exclude-instructions
+> instructions.excl
+rm -rf hw-tests-src
+mkdir -p hw-tests-src
+litmus7 -mach ./riscv.cfg -avail 4 -excl gcc.excl -excl instructions.excl -o hw-tests-src "tests/non-mixed-size/@all"
+File "tests/non-mixed-size/RELAX/Rfi/SB+rfi-addrs.litmus" Unconsistent hashes for test SB+rfi-addrs, previous file tests/non-mixed-size/HAND/SB+rfi-addrs.litmus
+make -C hw-tests-src
+make[1]: Entering directory '/home/bcc/litmus-tests-riscv/hw-tests-src'
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c affinity.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c outs.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c utils.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c litmus_rand.c
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -O2 -c topology.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S RR+RR+rmw-fence.tsopxs.c
+awk -f show.awk RR+RR+rmw-fence.tsopxs.s > RR+RR+rmw-fence.tsopxs.t
+sh toh.sh RR+RR+rmw-fence.tsopxs.t > RR+RR+rmw-fence.tsopxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o RR+RR+rmw-fence.tsopxs.o RR+RR+rmw-fence.tsopxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S RR+RR+rmw-fence.tso+rmw-fence.tsopx.c
+awk -f show.awk RR+RR+rmw-fence.tso+rmw-fence.tsopx.s > RR+RR+rmw-fence.tso+rmw-fence.tsopx.t
+sh toh.sh RR+RR+rmw-fence.tso+rmw-fence.tsopx.t > RR+RR+rmw-fence.tso+rmw-fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o RR+RR+rmw-fence.tso+rmw-fence.tsopx.o RR+RR+rmw-fence.tso+rmw-fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S RR+RR+rmw-fence.tsos.c
+awk -f show.awk RR+RR+rmw-fence.tsos.s > RR+RR+rmw-fence.tsos.t
+sh toh.sh RR+RR+rmw-fence.tsos.t > RR+RR+rmw-fence.tsos.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o RR+RR+rmw-fence.tsos.o RR+RR+rmw-fence.tsos.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tsoxxs.c
+awk -f show.awk 2+2W+fence.tsoxxs.s > 2+2W+fence.tsoxxs.t
+sh toh.sh 2+2W+fence.tsoxxs.t > 2+2W+fence.tsoxxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tsoxxs.o 2+2W+fence.tsoxxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxxs.c
+awk -f show.awk R+fence.tsoxxs.s > R+fence.tsoxxs.t
+sh toh.sh R+fence.tsoxxs.t > R+fence.tsoxxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxxs.o R+fence.tsoxxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tsoxxs.c
+awk -f show.awk SB+fence.tsoxxs.s > SB+fence.tsoxxs.t
+sh toh.sh SB+fence.tsoxxs.t > SB+fence.tsoxxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tsoxxs.o SB+fence.tsoxxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tsoxxs.c
+awk -f show.awk LB+fence.tsoxxs.s > LB+fence.tsoxxs.t
+sh toh.sh LB+fence.tsoxxs.t > LB+fence.tsoxxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tsoxxs.o LB+fence.tsoxxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxxs.c
+awk -f show.awk S+fence.tsoxxs.s > S+fence.tsoxxs.t
+sh toh.sh S+fence.tsoxxs.t > S+fence.tsoxxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxxs.o S+fence.tsoxxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxxs.c
+awk -f show.awk MP+fence.tsoxxs.s > MP+fence.tsoxxs.t
+sh toh.sh MP+fence.tsoxxs.t > MP+fence.tsoxxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxxs.o MP+fence.tsoxxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxx+fence.tsoxp.c
+awk -f show.awk MP+fence.tsoxx+fence.tsoxp.s > MP+fence.tsoxx+fence.tsoxp.t
+sh toh.sh MP+fence.tsoxx+fence.tsoxp.t > MP+fence.tsoxx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxx+fence.tsoxp.o MP+fence.tsoxx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tsoxp+fence.tsoxx.c
+awk -f show.awk LB+fence.tsoxp+fence.tsoxx.s > LB+fence.tsoxp+fence.tsoxx.t
+sh toh.sh LB+fence.tsoxp+fence.tsoxx.t > LB+fence.tsoxp+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tsoxp+fence.tsoxx.o LB+fence.tsoxp+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxx+fence.tsoxp.c
+awk -f show.awk S+fence.tsoxx+fence.tsoxp.s > S+fence.tsoxx+fence.tsoxp.t
+sh toh.sh S+fence.tsoxx+fence.tsoxp.t > S+fence.tsoxx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxx+fence.tsoxp.o S+fence.tsoxx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tsoxps.c
+awk -f show.awk LB+fence.tsoxps.s > LB+fence.tsoxps.t
+sh toh.sh LB+fence.tsoxps.t > LB+fence.tsoxps.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tsoxps.o LB+fence.tsoxps.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxx+fence.tsoxp.c
+awk -f show.awk R+fence.tsoxx+fence.tsoxp.s > R+fence.tsoxx+fence.tsoxp.t
+sh toh.sh R+fence.tsoxx+fence.tsoxp.t > R+fence.tsoxx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxx+fence.tsoxp.o R+fence.tsoxx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tsoxp+fence.tsoxx.c
+awk -f show.awk SB+fence.tsoxp+fence.tsoxx.s > SB+fence.tsoxp+fence.tsoxx.t
+sh toh.sh SB+fence.tsoxp+fence.tsoxx.t > SB+fence.tsoxp+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tsoxp+fence.tsoxx.o SB+fence.tsoxp+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tsoxps.c
+awk -f show.awk SB+fence.tsoxps.s > SB+fence.tsoxps.t
+sh toh.sh SB+fence.tsoxps.t > SB+fence.tsoxps.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tsoxps.o SB+fence.tsoxps.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxp+fence.tsoxx.c
+awk -f show.awk S+fence.tsoxp+fence.tsoxx.s > S+fence.tsoxp+fence.tsoxx.t
+sh toh.sh S+fence.tsoxp+fence.tsoxx.t > S+fence.tsoxp+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxp+fence.tsoxx.o S+fence.tsoxp+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tsoxp+fence.tsoxx.c
+awk -f show.awk 2+2W+fence.tsoxp+fence.tsoxx.s > 2+2W+fence.tsoxp+fence.tsoxx.t
+awk -f show.awk 2+2W+fence.tsoxp+fence.tsoxx.s > 2+2W+fence.tsoxp+fence.tsoxx.t
+sh toh.sh 2+2W+fence.tsoxp+fence.tsoxx.t > 2+2W+fence.tsoxp+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tsoxp+fence.tsoxx.o 2+2W+fence.tsoxp+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxps.c
+awk -f show.awk S+fence.tsoxps.s > S+fence.tsoxps.t
+sh toh.sh S+fence.tsoxps.t > S+fence.tsoxps.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxps.o S+fence.tsoxps.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tsoxps.c
+awk -f show.awk 2+2W+fence.tsoxps.s > 2+2W+fence.tsoxps.t
+sh toh.sh 2+2W+fence.tsoxps.t > 2+2W+fence.tsoxps.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tsoxps.o 2+2W+fence.tsoxps.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxp+fence.tsoxx.c
+awk -f show.awk MP+fence.tsoxp+fence.tsoxx.s > MP+fence.tsoxp+fence.tsoxx.t
+sh toh.sh MP+fence.tsoxp+fence.tsoxx.t > MP+fence.tsoxp+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxp+fence.tsoxx.o MP+fence.tsoxp+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxp+fence.tsoxx.c
+awk -f show.awk R+fence.tsoxp+fence.tsoxx.s > R+fence.tsoxp+fence.tsoxx.t
+sh toh.sh R+fence.tsoxp+fence.tsoxx.t > R+fence.tsoxp+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxp+fence.tsoxx.o R+fence.tsoxp+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxps.c
+awk -f show.awk MP+fence.tsoxps.s > MP+fence.tsoxps.t
+sh toh.sh MP+fence.tsoxps.t > MP+fence.tsoxps.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxps.o MP+fence.tsoxps.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxps.c
+awk -f show.awk R+fence.tsoxps.s > R+fence.tsoxps.t
+sh toh.sh R+fence.tsoxps.t > R+fence.tsoxps.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxps.o R+fence.tsoxps.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsopx+fence.tsoxx.c
+awk -f show.awk S+fence.tsopx+fence.tsoxx.s > S+fence.tsopx+fence.tsoxx.t
+sh toh.sh S+fence.tsopx+fence.tsoxx.t > S+fence.tsopx+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsopx+fence.tsoxx.o S+fence.tsopx+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tso+fence.tsoxx.c
+awk -f show.awk S+fence.tso+fence.tsoxx.s > S+fence.tso+fence.tsoxx.t
+sh toh.sh S+fence.tso+fence.tsoxx.t > S+fence.tso+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tso+fence.tsoxx.o S+fence.tso+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tsopx+fence.tsoxx.c
+awk -f show.awk 2+2W+fence.tsopx+fence.tsoxx.s > 2+2W+fence.tsopx+fence.tsoxx.t
+sh toh.sh 2+2W+fence.tsopx+fence.tsoxx.t > 2+2W+fence.tsopx+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tsopx+fence.tsoxx.o 2+2W+fence.tsopx+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tso+fence.tsoxx.c
+awk -f show.awk 2+2W+fence.tso+fence.tsoxx.s > 2+2W+fence.tso+fence.tsoxx.t
+sh toh.sh 2+2W+fence.tso+fence.tsoxx.t > 2+2W+fence.tso+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tso+fence.tsoxx.o 2+2W+fence.tso+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxx+fence.tsopx.c
+awk -f show.awk R+fence.tsoxx+fence.tsopx.s > R+fence.tsoxx+fence.tsopx.t
+sh toh.sh R+fence.tsoxx+fence.tsopx.t > R+fence.tsoxx+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxx+fence.tsopx.o R+fence.tsoxx+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxx+fence.tso.c
+awk -f show.awk R+fence.tsoxx+fence.tso.s > R+fence.tsoxx+fence.tso.t
+sh toh.sh R+fence.tsoxx+fence.tso.t > R+fence.tsoxx+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxx+fence.tso.o R+fence.tsoxx+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tsopxs.c
+awk -f show.awk 2+2W+fence.tsopxs.s > 2+2W+fence.tsopxs.t
+sh toh.sh 2+2W+fence.tsopxs.t > 2+2W+fence.tsopxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tsopxs.o 2+2W+fence.tsopxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsopx+fence.tsoxp.c
+awk -f show.awk S+fence.tsopx+fence.tsoxp.s > S+fence.tsopx+fence.tsoxp.t
+sh toh.sh S+fence.tsopx+fence.tsoxp.t > S+fence.tsopx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsopx+fence.tsoxp.o S+fence.tsopx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tso+fence.tsoxp.c
+awk -f show.awk S+fence.tso+fence.tsoxp.s > S+fence.tso+fence.tsoxp.t
+sh toh.sh S+fence.tso+fence.tsoxp.t > S+fence.tso+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tso+fence.tsoxp.o S+fence.tso+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tsopx+fence.tsoxp.c
+awk -f show.awk 2+2W+fence.tsopx+fence.tsoxp.s > 2+2W+fence.tsopx+fence.tsoxp.t
+sh toh.sh 2+2W+fence.tsopx+fence.tsoxp.t > 2+2W+fence.tsopx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tsopx+fence.tsoxp.o 2+2W+fence.tsopx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tso+fence.tsoxp.c
+awk -f show.awk 2+2W+fence.tso+fence.tsoxp.s > 2+2W+fence.tso+fence.tsoxp.t
+sh toh.sh 2+2W+fence.tso+fence.tsoxp.t > 2+2W+fence.tso+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tso+fence.tsoxp.o 2+2W+fence.tso+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxp+fence.tsopx.c
+awk -f show.awk R+fence.tsoxp+fence.tsopx.s > R+fence.tsoxp+fence.tsopx.t
+sh toh.sh R+fence.tsoxp+fence.tsopx.t > R+fence.tsoxp+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxp+fence.tsopx.o R+fence.tsoxp+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsoxp+fence.tso.c
+awk -f show.awk R+fence.tsoxp+fence.tso.s > R+fence.tsoxp+fence.tso.t
+sh toh.sh R+fence.tsoxp+fence.tso.t > R+fence.tsoxp+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsoxp+fence.tso.o R+fence.tsoxp+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tso+fence.tsopx.c
+awk -f show.awk 2+2W+fence.tso+fence.tsopx.s > 2+2W+fence.tso+fence.tsopx.t
+sh toh.sh 2+2W+fence.tso+fence.tsopx.t > 2+2W+fence.tso+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tso+fence.tsopx.o 2+2W+fence.tso+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+fence.tsos.c
+awk -f show.awk 2+2W+fence.tsos.s > 2+2W+fence.tsos.t
+sh toh.sh 2+2W+fence.tsos.t > 2+2W+fence.tsos.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+fence.tsos.o 2+2W+fence.tsos.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsopx+fence.tsoxx.c
+awk -f show.awk MP+fence.tsopx+fence.tsoxx.s > MP+fence.tsopx+fence.tsoxx.t
+sh toh.sh MP+fence.tsopx+fence.tsoxx.t > MP+fence.tsopx+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsopx+fence.tsoxx.o MP+fence.tsopx+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tso+fence.tsoxx.c
+awk -f show.awk MP+fence.tso+fence.tsoxx.s > MP+fence.tso+fence.tsoxx.t
+sh toh.sh MP+fence.tso+fence.tsoxx.t > MP+fence.tso+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tso+fence.tsoxx.o MP+fence.tso+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsopx+fence.tsoxx.c
+awk -f show.awk R+fence.tsopx+fence.tsoxx.s > R+fence.tsopx+fence.tsoxx.t
+sh toh.sh R+fence.tsopx+fence.tsoxx.t > R+fence.tsopx+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsopx+fence.tsoxx.o R+fence.tsopx+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tso+fence.tsoxx.c
+awk -f show.awk R+fence.tso+fence.tsoxx.s > R+fence.tso+fence.tsoxx.t
+sh toh.sh R+fence.tso+fence.tsoxx.t > R+fence.tso+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tso+fence.tsoxx.o R+fence.tso+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tsopx+fence.tsoxx.c
+awk -f show.awk SB+fence.tsopx+fence.tsoxx.s > SB+fence.tsopx+fence.tsoxx.t
+sh toh.sh SB+fence.tsopx+fence.tsoxx.t > SB+fence.tsopx+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tsopx+fence.tsoxx.o SB+fence.tsopx+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tso+fence.tsoxx.c
+awk -f show.awk SB+fence.tso+fence.tsoxx.s > SB+fence.tso+fence.tsoxx.t
+sh toh.sh SB+fence.tso+fence.tsoxx.t > SB+fence.tso+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tso+fence.tsoxx.o SB+fence.tso+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsopxs.c
+awk -f show.awk R+fence.tsopxs.s > R+fence.tsopxs.t
+sh toh.sh R+fence.tsopxs.t > R+fence.tsopxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsopxs.o R+fence.tsopxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tso+fence.tsopx.c
+awk -f show.awk R+fence.tso+fence.tsopx.s > R+fence.tso+fence.tsopx.t
+sh toh.sh R+fence.tso+fence.tsopx.t > R+fence.tso+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tso+fence.tsopx.o R+fence.tso+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tsopxs.c
+awk -f show.awk SB+fence.tsopxs.s > SB+fence.tsopxs.t
+sh toh.sh SB+fence.tsopxs.t > SB+fence.tsopxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tsopxs.o SB+fence.tsopxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsopx+fence.tsoxp.c
+awk -f show.awk MP+fence.tsopx+fence.tsoxp.s > MP+fence.tsopx+fence.tsoxp.t
+sh toh.sh MP+fence.tsopx+fence.tsoxp.t > MP+fence.tsopx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsopx+fence.tsoxp.o MP+fence.tsopx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tso+fence.tsoxp.c
+awk -f show.awk MP+fence.tso+fence.tsoxp.s > MP+fence.tso+fence.tsoxp.t
+sh toh.sh MP+fence.tso+fence.tsoxp.t > MP+fence.tso+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tso+fence.tsoxp.o MP+fence.tso+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsopx+fence.tsoxp.c
+awk -f show.awk R+fence.tsopx+fence.tsoxp.s > R+fence.tsopx+fence.tsoxp.t
+sh toh.sh R+fence.tsopx+fence.tsoxp.t > R+fence.tsopx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsopx+fence.tsoxp.o R+fence.tsopx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tso+fence.tsoxp.c
+awk -f show.awk R+fence.tso+fence.tsoxp.s > R+fence.tso+fence.tsoxp.t
+sh toh.sh R+fence.tso+fence.tsoxp.t > R+fence.tso+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tso+fence.tsoxp.o R+fence.tso+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tsopx+fence.tsoxp.c
+awk -f show.awk SB+fence.tsopx+fence.tsoxp.s > SB+fence.tsopx+fence.tsoxp.t
+sh toh.sh SB+fence.tsopx+fence.tsoxp.t > SB+fence.tsopx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tsopx+fence.tsoxp.o SB+fence.tsopx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tso+fence.tsoxp.c
+awk -f show.awk SB+fence.tso+fence.tsoxp.s > SB+fence.tso+fence.tsoxp.t
+sh toh.sh SB+fence.tso+fence.tsoxp.t > SB+fence.tso+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tso+fence.tsoxp.o SB+fence.tso+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsopx+fence.tso.c
+awk -f show.awk R+fence.tsopx+fence.tso.s > R+fence.tsopx+fence.tso.t
+sh toh.sh R+fence.tsopx+fence.tso.t > R+fence.tsopx+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsopx+fence.tso.o R+fence.tsopx+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+fence.tsos.c
+awk -f show.awk R+fence.tsos.s > R+fence.tsos.t
+sh toh.sh R+fence.tsos.t > R+fence.tsos.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+fence.tsos.o R+fence.tsos.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tso+fence.tsopx.c
+awk -f show.awk SB+fence.tso+fence.tsopx.s > SB+fence.tso+fence.tsopx.t
+sh toh.sh SB+fence.tso+fence.tsopx.t > SB+fence.tso+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tso+fence.tsopx.o SB+fence.tso+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.tsos.c
+awk -f show.awk SB+fence.tsos.s > SB+fence.tsos.t
+sh toh.sh SB+fence.tsos.t > SB+fence.tsos.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.tsos.o SB+fence.tsos.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tsopx+fence.tsoxx.c
+awk -f show.awk LB+fence.tsopx+fence.tsoxx.s > LB+fence.tsopx+fence.tsoxx.t
+sh toh.sh LB+fence.tsopx+fence.tsoxx.t > LB+fence.tsopx+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tsopx+fence.tsoxx.o LB+fence.tsopx+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tso+fence.tsoxx.c
+awk -f show.awk LB+fence.tso+fence.tsoxx.s > LB+fence.tso+fence.tsoxx.t
+sh toh.sh LB+fence.tso+fence.tsoxx.t > LB+fence.tso+fence.tsoxx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tso+fence.tsoxx.o LB+fence.tso+fence.tsoxx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tsopxs.c
+awk -f show.awk LB+fence.tsopxs.s > LB+fence.tsopxs.t
+sh toh.sh LB+fence.tsopxs.t > LB+fence.tsopxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tsopxs.o LB+fence.tsopxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxx+fence.tsopx.c
+awk -f show.awk S+fence.tsoxx+fence.tsopx.s > S+fence.tsoxx+fence.tsopx.t
+sh toh.sh S+fence.tsoxx+fence.tsopx.t > S+fence.tsoxx+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxx+fence.tsopx.o S+fence.tsoxx+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxx+fence.tso.c
+awk -f show.awk S+fence.tsoxx+fence.tso.s > S+fence.tsoxx+fence.tso.t
+sh toh.sh S+fence.tsoxx+fence.tso.t > S+fence.tsoxx+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxx+fence.tso.o S+fence.tsoxx+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxx+fence.tsopx.c
+awk -f show.awk MP+fence.tsoxx+fence.tsopx.s > MP+fence.tsoxx+fence.tsopx.t
+sh toh.sh MP+fence.tsoxx+fence.tsopx.t > MP+fence.tsoxx+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxx+fence.tsopx.o MP+fence.tsoxx+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxx+fence.tso.c
+awk -f show.awk MP+fence.tsoxx+fence.tso.s > MP+fence.tsoxx+fence.tso.t
+sh toh.sh MP+fence.tsoxx+fence.tso.t > MP+fence.tsoxx+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxx+fence.tso.o MP+fence.tsoxx+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsopxs.c
+awk -f show.awk S+fence.tsopxs.s > S+fence.tsopxs.t
+sh toh.sh S+fence.tsopxs.t > S+fence.tsopxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsopxs.o S+fence.tsopxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsopx+fence.tso.c
+awk -f show.awk S+fence.tsopx+fence.tso.s > S+fence.tsopx+fence.tso.t
+sh toh.sh S+fence.tsopx+fence.tso.t > S+fence.tsopx+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsopx+fence.tso.o S+fence.tsopx+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsopxs.c
+awk -f show.awk MP+fence.tsopxs.s > MP+fence.tsopxs.t
+sh toh.sh MP+fence.tsopxs.t > MP+fence.tsopxs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsopxs.o MP+fence.tsopxs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsopx+fence.tso.c
+awk -f show.awk MP+fence.tsopx+fence.tso.s > MP+fence.tsopx+fence.tso.t
+sh toh.sh MP+fence.tsopx+fence.tso.t > MP+fence.tsopx+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsopx+fence.tso.o MP+fence.tsopx+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tsopx+fence.tsoxp.c
+awk -f show.awk LB+fence.tsopx+fence.tsoxp.s > LB+fence.tsopx+fence.tsoxp.t
+sh toh.sh LB+fence.tsopx+fence.tsoxp.t > LB+fence.tsopx+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tsopx+fence.tsoxp.o LB+fence.tsopx+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tso+fence.tsoxp.c
+awk -f show.awk LB+fence.tso+fence.tsoxp.s > LB+fence.tso+fence.tsoxp.t
+sh toh.sh LB+fence.tso+fence.tsoxp.t > LB+fence.tso+fence.tsoxp.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tso+fence.tsoxp.o LB+fence.tso+fence.tsoxp.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tso+fence.tsopx.c
+awk -f show.awk LB+fence.tso+fence.tsopx.s > LB+fence.tso+fence.tsopx.t
+sh toh.sh LB+fence.tso+fence.tsopx.t > LB+fence.tso+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tso+fence.tsopx.o LB+fence.tso+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.tsos.c
+awk -f show.awk LB+fence.tsos.s > LB+fence.tsos.t
+sh toh.sh LB+fence.tsos.t > LB+fence.tsos.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.tsos.o LB+fence.tsos.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxp+fence.tsopx.c
+awk -f show.awk S+fence.tsoxp+fence.tsopx.s > S+fence.tsoxp+fence.tsopx.t
+sh toh.sh S+fence.tsoxp+fence.tsopx.t > S+fence.tsoxp+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxp+fence.tsopx.o S+fence.tsoxp+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsoxp+fence.tso.c
+awk -f show.awk S+fence.tsoxp+fence.tso.s > S+fence.tsoxp+fence.tso.t
+sh toh.sh S+fence.tsoxp+fence.tso.t > S+fence.tsoxp+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsoxp+fence.tso.o S+fence.tsoxp+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxp+fence.tsopx.c
+awk -f show.awk MP+fence.tsoxp+fence.tsopx.s > MP+fence.tsoxp+fence.tsopx.t
+sh toh.sh MP+fence.tsoxp+fence.tsopx.t > MP+fence.tsoxp+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxp+fence.tsopx.o MP+fence.tsoxp+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsoxp+fence.tso.c
+awk -f show.awk MP+fence.tsoxp+fence.tso.s > MP+fence.tsoxp+fence.tso.t
+sh toh.sh MP+fence.tsoxp+fence.tso.t > MP+fence.tsoxp+fence.tso.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsoxp+fence.tso.o MP+fence.tsoxp+fence.tso.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tso+fence.tsopx.c
+awk -f show.awk S+fence.tso+fence.tsopx.s > S+fence.tso+fence.tsopx.t
+sh toh.sh S+fence.tso+fence.tsopx.t > S+fence.tso+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tso+fence.tsopx.o S+fence.tso+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.tsos.c
+awk -f show.awk S+fence.tsos.s > S+fence.tsos.t
+sh toh.sh S+fence.tsos.t > S+fence.tsos.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.tsos.o S+fence.tsos.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tso+fence.tsopx.c
+awk -f show.awk MP+fence.tso+fence.tsopx.s > MP+fence.tso+fence.tsopx.t
+sh toh.sh MP+fence.tso+fence.tsopx.t > MP+fence.tso+fence.tsopx.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tso+fence.tsopx.o MP+fence.tso+fence.tsopx.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.tsos.c
+awk -f show.awk MP+fence.tsos.s > MP+fence.tsos.t
+sh toh.sh MP+fence.tsos.t > MP+fence.tsos.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.tsos.o MP+fence.tsos.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R.c
+awk -f show.awk R.s > R.t
+sh toh.sh R.t > R.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R.o R.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S.c
+awk -f show.awk S.s > S.t
+sh toh.sh S.t > S.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S.o S.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+po+ctrl.c
+awk -f show.awk MP+po+ctrl.s > MP+po+ctrl.t
+sh toh.sh MP+po+ctrl.t > MP+po+ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+po+ctrl.o MP+po+ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP.c
+awk -f show.awk MP.s > MP.t
+sh toh.sh MP.t > MP.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP.o MP.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+po+popar+NEW.c
+awk -f show.awk MP+po+popar+NEW.s > MP+po+popar+NEW.t
+sh toh.sh MP+po+popar+NEW.t > MP+po+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+po+popar+NEW.o MP+po+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+po+popar+NEW.c
+awk -f show.awk LB+po+popar+NEW.s > LB+po+popar+NEW.t
+sh toh.sh LB+po+popar+NEW.t > LB+po+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+po+popar+NEW.o LB+po+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+po+popar+NEW.c
+awk -f show.awk S+po+popar+NEW.s > S+po+popar+NEW.t
+sh toh.sh S+po+popar+NEW.t > S+po+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+po+popar+NEW.o S+po+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+popars+NEW.c
+awk -f show.awk LB+popars+NEW.s > LB+popars+NEW.t
+sh toh.sh LB+popars+NEW.t > LB+popars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+popars+NEW.o LB+popars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+po+popar+NEW.c
+awk -f show.awk R+po+popar+NEW.s > R+po+popar+NEW.t
+sh toh.sh R+po+popar+NEW.t > R+po+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+po+popar+NEW.o R+po+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+po+popar+NEW.c
+awk -f show.awk SB+po+popar+NEW.s > SB+po+popar+NEW.t
+sh toh.sh SB+po+popar+NEW.t > SB+po+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+po+popar+NEW.o SB+po+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+popars+NEW.c
+awk -f show.awk SB+popars+NEW.s > SB+popars+NEW.t
+sh toh.sh SB+popars+NEW.t > SB+popars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+popars+NEW.o SB+popars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+popar+po+NEW.c
+awk -f show.awk S+popar+po+NEW.s > S+popar+po+NEW.t
+sh toh.sh S+popar+po+NEW.t > S+popar+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+popar+po+NEW.o S+popar+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+po+popar+NEW.c
+awk -f show.awk 2+2W+po+popar+NEW.s > 2+2W+po+popar+NEW.t
+sh toh.sh 2+2W+po+popar+NEW.t > 2+2W+po+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+po+popar+NEW.o 2+2W+po+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+popars+NEW.c
+awk -f show.awk S+popars+NEW.s > S+popars+NEW.t
+sh toh.sh S+popars+NEW.t > S+popars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+popars+NEW.o S+popars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+popars+NEW.c
+awk -f show.awk 2+2W+popars+NEW.s > 2+2W+popars+NEW.t
+sh toh.sh 2+2W+popars+NEW.t > 2+2W+popars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+popars+NEW.o 2+2W+popars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+popar+po+NEW.c
+awk -f show.awk MP+popar+po+NEW.s > MP+popar+po+NEW.t
+sh toh.sh MP+popar+po+NEW.t > MP+popar+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+popar+po+NEW.o MP+popar+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+popar+po+NEW.c
+awk -f show.awk R+popar+po+NEW.s > R+popar+po+NEW.t
+sh toh.sh R+popar+po+NEW.t > R+popar+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+popar+po+NEW.o R+popar+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+popars+NEW.c
+awk -f show.awk MP+popars+NEW.s > MP+popars+NEW.t
+sh toh.sh MP+popars+NEW.t > MP+popars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+popars+NEW.o MP+popars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+popars+NEW.c
+awk -f show.awk R+popars+NEW.s > R+popars+NEW.t
+sh toh.sh R+popars+NEW.t > R+popars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+popars+NEW.o R+popars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarp+po+NEW.c
+awk -f show.awk S+poarp+po+NEW.s > S+poarp+po+NEW.t
+sh toh.sh S+poarp+po+NEW.t > S+poarp+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarp+po+NEW.o S+poarp+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarar+po+NEW.c
+awk -f show.awk S+poarar+po+NEW.s > S+poarar+po+NEW.t
+sh toh.sh S+poarar+po+NEW.t > S+poarar+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarar+po+NEW.o S+poarar+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+po+poarp+NEW.c
+awk -f show.awk 2+2W+po+poarp+NEW.s > 2+2W+po+poarp+NEW.t
+sh toh.sh 2+2W+po+poarp+NEW.t > 2+2W+po+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+po+poarp+NEW.o 2+2W+po+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+po+poarar+NEW.c
+^[[Bawk -f show.awk 2+2W+po+poarar+NEW.s > 2+2W+po+poarar+NEW.t
+sh toh.sh 2+2W+po+poarar+NEW.t > 2+2W+po+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+po+poarar+NEW.o 2+2W+po+poarar+NEW.c
+^[[Briscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+po+poarp+NEW.c
+awk -f show.awk R+po+poarp+NEW.s > R+po+poarp+NEW.t
+sh toh.sh R+po+poarp+NEW.t > R+po+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+po+poarp+NEW.o R+po+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+po+poarar+NEW.c
+awk -f show.awk R+po+poarar+NEW.s > R+po+poarar+NEW.t
+sh toh.sh R+po+poarar+NEW.t > R+po+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+po+poarar+NEW.o R+po+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+poarps+NEW.c
+awk -f show.awk 2+2W+poarps+NEW.s > 2+2W+poarps+NEW.t
+sh toh.sh 2+2W+poarps+NEW.t > 2+2W+poarps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+poarps+NEW.o 2+2W+poarps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarp+popar+NEW.c
+awk -f show.awk S+poarp+popar+NEW.s > S+poarp+popar+NEW.t
+sh toh.sh S+poarp+popar+NEW.t > S+poarp+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarp+popar+NEW.o S+poarp+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarar+popar+NEW.c
+awk -f show.awk S+poarar+popar+NEW.s > S+poarar+popar+NEW.t
+sh toh.sh S+poarar+popar+NEW.t > S+poarar+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarar+popar+NEW.o S+poarar+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+popar+poarp+NEW.c
+awk -f show.awk 2+2W+popar+poarp+NEW.s > 2+2W+popar+poarp+NEW.t
+sh toh.sh 2+2W+popar+poarp+NEW.t > 2+2W+popar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+popar+poarp+NEW.o 2+2W+popar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+popar+poarar+NEW.c
+awk -f show.awk 2+2W+popar+poarar+NEW.s > 2+2W+popar+poarar+NEW.t
+sh toh.sh 2+2W+popar+poarar+NEW.t > 2+2W+popar+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+popar+poarar+NEW.o 2+2W+popar+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+popar+poarp+NEW.c
+awk -f show.awk R+popar+poarp+NEW.s > R+popar+poarp+NEW.t
+sh toh.sh R+popar+poarp+NEW.t > R+popar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+popar+poarp+NEW.o R+popar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+popar+poarar+NEW.c
+awk -f show.awk R+popar+poarar+NEW.s > R+popar+poarar+NEW.t
+sh toh.sh R+popar+poarar+NEW.t > R+popar+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+popar+poarar+NEW.o R+popar+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+poarp+poarar+NEW.c
+awk -f show.awk 2+2W+poarp+poarar+NEW.s > 2+2W+poarp+poarar+NEW.t
+sh toh.sh 2+2W+poarp+poarar+NEW.t > 2+2W+poarp+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+poarp+poarar+NEW.o 2+2W+poarp+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+poarars+NEW.c
+awk -f show.awk 2+2W+poarars+NEW.s > 2+2W+poarars+NEW.t
+sh toh.sh 2+2W+poarars+NEW.t > 2+2W+poarars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+poarars+NEW.o 2+2W+poarars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarp+po+NEW.c
+awk -f show.awk MP+poarp+po+NEW.s > MP+poarp+po+NEW.t
+sh toh.sh MP+poarp+po+NEW.t > MP+poarp+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarp+po+NEW.o MP+poarp+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarar+po+NEW.c
+awk -f show.awk MP+poarar+po+NEW.s > MP+poarar+po+NEW.t
+sh toh.sh MP+poarar+po+NEW.t > MP+poarar+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarar+po+NEW.o MP+poarar+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarp+po+NEW.c
+awk -f show.awk R+poarp+po+NEW.s > R+poarp+po+NEW.t
+sh toh.sh R+poarp+po+NEW.t > R+poarp+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarp+po+NEW.o R+poarp+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarar+po+NEW.c
+awk -f show.awk R+poarar+po+NEW.s > R+poarar+po+NEW.t
+sh toh.sh R+poarar+po+NEW.t > R+poarar+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarar+po+NEW.o R+poarar+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+po+poarp+NEW.c
+awk -f show.awk SB+po+poarp+NEW.s > SB+po+poarp+NEW.t
+sh toh.sh SB+po+poarp+NEW.t > SB+po+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+po+poarp+NEW.o SB+po+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+po+poarar+NEW.c
+awk -f show.awk SB+po+poarar+NEW.s > SB+po+poarar+NEW.t
+sh toh.sh SB+po+poarar+NEW.t > SB+po+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+po+poarar+NEW.o SB+po+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarps+NEW.c
+awk -f show.awk R+poarps+NEW.s > R+poarps+NEW.t
+sh toh.sh R+poarps+NEW.t > R+poarps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarps+NEW.o R+poarps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarar+poarp+NEW.c
+awk -f show.awk R+poarar+poarp+NEW.s > R+poarar+poarp+NEW.t
+sh toh.sh R+poarar+poarp+NEW.t > R+poarar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarar+poarp+NEW.o R+poarar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+poarps+NEW.c
+awk -f show.awk SB+poarps+NEW.s > SB+poarps+NEW.t
+sh toh.sh SB+poarps+NEW.t > SB+poarps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+poarps+NEW.o SB+poarps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarp+popar+NEW.c
+awk -f show.awk MP+poarp+popar+NEW.s > MP+poarp+popar+NEW.t
+sh toh.sh MP+poarp+popar+NEW.t > MP+poarp+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarp+popar+NEW.o MP+poarp+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarar+popar+NEW.c
+awk -f show.awk MP+poarar+popar+NEW.s > MP+poarar+popar+NEW.t
+sh toh.sh MP+poarar+popar+NEW.t > MP+poarar+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarar+popar+NEW.o MP+poarar+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarp+popar+NEW.c
+awk -f show.awk R+poarp+popar+NEW.s > R+poarp+popar+NEW.t
+sh toh.sh R+poarp+popar+NEW.t > R+poarp+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarp+popar+NEW.o R+poarp+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarar+popar+NEW.c
+awk -f show.awk R+poarar+popar+NEW.s > R+poarar+popar+NEW.t
+sh toh.sh R+poarar+popar+NEW.t > R+poarar+popar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarar+popar+NEW.o R+poarar+popar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+popar+poarp+NEW.c
+awk -f show.awk SB+popar+poarp+NEW.s > SB+popar+poarp+NEW.t
+sh toh.sh SB+popar+poarp+NEW.t > SB+popar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+popar+poarp+NEW.o SB+popar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+popar+poarar+NEW.c
+awk -f show.awk SB+popar+poarar+NEW.s > SB+popar+poarar+NEW.t
+sh toh.sh SB+popar+poarar+NEW.t > SB+popar+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+popar+poarar+NEW.o SB+popar+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarp+poarar+NEW.c
+awk -f show.awk R+poarp+poarar+NEW.s > R+poarp+poarar+NEW.t
+sh toh.sh R+poarp+poarar+NEW.t > R+poarp+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarp+poarar+NEW.o R+poarp+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poarars+NEW.c
+awk -f show.awk R+poarars+NEW.s > R+poarars+NEW.t
+sh toh.sh R+poarars+NEW.t > R+poarars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poarars+NEW.o R+poarars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+poarp+poarar+NEW.c
+awk -f show.awk SB+poarp+poarar+NEW.s > SB+poarp+poarar+NEW.t
+sh toh.sh SB+poarp+poarar+NEW.t > SB+poarp+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+poarp+poarar+NEW.o SB+poarp+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+poarars+NEW.c
+awk -f show.awk SB+poarars+NEW.s > SB+poarars+NEW.t
+sh toh.sh SB+poarars+NEW.t > SB+poarars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+poarars+NEW.o SB+poarars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+po+poarp+NEW.c
+awk -f show.awk LB+po+poarp+NEW.s > LB+po+poarp+NEW.t
+sh toh.sh LB+po+poarp+NEW.t > LB+po+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+po+poarp+NEW.o LB+po+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+po+poarar+NEW.c
+awk -f show.awk LB+po+poarar+NEW.s > LB+po+poarar+NEW.t
+sh toh.sh LB+po+poarar+NEW.t > LB+po+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+po+poarar+NEW.o LB+po+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+poarps+NEW.c
+awk -f show.awk LB+poarps+NEW.s > LB+poarps+NEW.t
+sh toh.sh LB+poarps+NEW.t > LB+poarps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+poarps+NEW.o LB+poarps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+po+poarp+NEW.c
+awk -f show.awk S+po+poarp+NEW.s > S+po+poarp+NEW.t
+sh toh.sh S+po+poarp+NEW.t > S+po+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+po+poarp+NEW.o S+po+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+po+poarar+NEW.c
+awk -f show.awk S+po+poarar+NEW.s > S+po+poarar+NEW.t
+sh toh.sh S+po+poarar+NEW.t > S+po+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+po+poarar+NEW.o S+po+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+po+poarp+NEW.c
+awk -f show.awk MP+po+poarp+NEW.s > MP+po+poarp+NEW.t
+sh toh.sh MP+po+poarp+NEW.t > MP+po+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+po+poarp+NEW.o MP+po+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+po+poarar+NEW.c
+awk -f show.awk MP+po+poarar+NEW.s > MP+po+poarar+NEW.t
+sh toh.sh MP+po+poarar+NEW.t > MP+po+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+po+poarar+NEW.o MP+po+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarps+NEW.c
+awk -f show.awk S+poarps+NEW.s > S+poarps+NEW.t
+sh toh.sh S+poarps+NEW.t > S+poarps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarps+NEW.o S+poarps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarp+poarar+NEW.c
+awk -f show.awk S+poarp+poarar+NEW.s > S+poarp+poarar+NEW.t
+sh toh.sh S+poarp+poarar+NEW.t > S+poarp+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarp+poarar+NEW.o S+poarp+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarps+NEW.c
+awk -f show.awk MP+poarps+NEW.s > MP+poarps+NEW.t
+sh toh.sh MP+poarps+NEW.t > MP+poarps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarps+NEW.o MP+poarps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarp+poarar+NEW.c
+awk -f show.awk MP+poarp+poarar+NEW.s > MP+poarp+poarar+NEW.t
+sh toh.sh MP+poarp+poarar+NEW.t > MP+poarp+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarp+poarar+NEW.o MP+poarp+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+popar+poarp+NEW.c
+awk -f show.awk LB+popar+poarp+NEW.s > LB+popar+poarp+NEW.t
+sh toh.sh LB+popar+poarp+NEW.t > LB+popar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+popar+poarp+NEW.o LB+popar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+popar+poarar+NEW.c
+awk -f show.awk LB+popar+poarar+NEW.s > LB+popar+poarar+NEW.t
+sh toh.sh LB+popar+poarar+NEW.t > LB+popar+poarar+NEW.h
+sh toh.sh LB+popar+poarar+NEW.t > LB+popar+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+popar+poarar+NEW.o LB+popar+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+poarp+poarar+NEW.c
+awk -f show.awk LB+poarp+poarar+NEW.s > LB+poarp+poarar+NEW.t
+sh toh.sh LB+poarp+poarar+NEW.t > LB+poarp+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+poarp+poarar+NEW.o LB+poarp+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+poarars+NEW.c
+awk -f show.awk LB+poarars+NEW.s > LB+poarars+NEW.t
+sh toh.sh LB+poarars+NEW.t > LB+poarars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+poarars+NEW.o LB+poarars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+popar+poarp+NEW.c
+awk -f show.awk S+popar+poarp+NEW.s > S+popar+poarp+NEW.t
+sh toh.sh S+popar+poarp+NEW.t > S+popar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+popar+poarp+NEW.o S+popar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+popar+poarar+NEW.c
+awk -f show.awk S+popar+poarar+NEW.s > S+popar+poarar+NEW.t
+sh toh.sh S+popar+poarar+NEW.t > S+popar+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+popar+poarar+NEW.o S+popar+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+popar+poarp+NEW.c
+awk -f show.awk MP+popar+poarp+NEW.s > MP+popar+poarp+NEW.t
+sh toh.sh MP+popar+poarp+NEW.t > MP+popar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+popar+poarp+NEW.o MP+popar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+popar+poarar+NEW.c
+awk -f show.awk MP+popar+poarar+NEW.s > MP+popar+poarar+NEW.t
+sh toh.sh MP+popar+poarar+NEW.t > MP+popar+poarar+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+popar+poarar+NEW.o MP+popar+poarar+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarar+poarp+NEW.c
+awk -f show.awk S+poarar+poarp+NEW.s > S+poarar+poarp+NEW.t
+sh toh.sh S+poarar+poarp+NEW.t > S+poarar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarar+poarp+NEW.o S+poarar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poarars+NEW.c
+awk -f show.awk S+poarars+NEW.s > S+poarars+NEW.t
+sh toh.sh S+poarars+NEW.t > S+poarars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poarars+NEW.o S+poarars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarar+poarp+NEW.c
+awk -f show.awk MP+poarar+poarp+NEW.s > MP+poarar+poarp+NEW.t
+sh toh.sh MP+poarar+poarp+NEW.t > MP+poarar+poarp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarar+poarp+NEW.o MP+poarar+poarp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poarars+NEW.c
+awk -f show.awk MP+poarars+NEW.s > MP+poarars+NEW.t
+sh toh.sh MP+poarars+NEW.t > MP+poarars+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poarars+NEW.o MP+poarars+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+po+poprl+NEW.c
+awk -f show.awk LB+po+poprl+NEW.s > LB+po+poprl+NEW.t
+sh toh.sh LB+po+poprl+NEW.t > LB+po+poprl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+po+poprl+NEW.o LB+po+poprl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+po+poprl+NEW.c
+awk -f show.awk S+po+poprl+NEW.s > S+po+poprl+NEW.t
+sh toh.sh S+po+poprl+NEW.t > S+po+poprl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+po+poprl+NEW.o S+po+poprl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+poprls+NEW.c
+awk -f show.awk LB+poprls+NEW.s > LB+poprls+NEW.t
+sh toh.sh LB+poprls+NEW.t > LB+poprls+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+poprls+NEW.o LB+poprls+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poprl+po+NEW.c
+awk -f show.awk S+poprl+po+NEW.s > S+poprl+po+NEW.t
+sh toh.sh S+poprl+po+NEW.t > S+poprl+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poprl+po+NEW.o S+poprl+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+po+poprl+NEW.c
+awk -f show.awk 2+2W+po+poprl+NEW.s > 2+2W+po+poprl+NEW.t
+sh toh.sh 2+2W+po+poprl+NEW.t > 2+2W+po+poprl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+po+poprl+NEW.o 2+2W+po+poprl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+poprls+NEW.c
+awk -f show.awk S+poprls+NEW.s > S+poprls+NEW.t
+sh toh.sh S+poprls+NEW.t > S+poprls+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+poprls+NEW.o S+poprls+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+poprls+NEW.c
+awk -f show.awk 2+2W+poprls+NEW.s > 2+2W+poprls+NEW.t
+sh toh.sh 2+2W+poprls+NEW.t > 2+2W+poprls+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+poprls+NEW.o 2+2W+poprls+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+poprl+po+NEW.c
+awk -f show.awk MP+poprl+po+NEW.s > MP+poprl+po+NEW.t
+sh toh.sh MP+poprl+po+NEW.t > MP+poprl+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+poprl+po+NEW.o MP+poprl+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poprl+po+NEW.c
+awk -f show.awk R+poprl+po+NEW.s > R+poprl+po+NEW.t
+sh toh.sh R+poprl+po+NEW.t > R+poprl+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poprl+po+NEW.o R+poprl+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+porlp+po+NEW.c
+awk -f show.awk S+porlp+po+NEW.s > S+porlp+po+NEW.t
+sh toh.sh S+porlp+po+NEW.t > S+porlp+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+porlp+po+NEW.o S+porlp+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+porlrl+po+NEW.c
+awk -f show.awk S+porlrl+po+NEW.s > S+porlrl+po+NEW.t
+sh toh.sh S+porlrl+po+NEW.t > S+porlrl+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+porlrl+po+NEW.o S+porlrl+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+po+porlp+NEW.c
+awk -f show.awk 2+2W+po+porlp+NEW.s > 2+2W+po+porlp+NEW.t
+sh toh.sh 2+2W+po+porlp+NEW.t > 2+2W+po+porlp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+po+porlp+NEW.o 2+2W+po+porlp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+po+porlrl+NEW.c
+awk -f show.awk 2+2W+po+porlrl+NEW.s > 2+2W+po+porlrl+NEW.t
+sh toh.sh 2+2W+po+porlrl+NEW.t > 2+2W+po+porlrl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+po+porlrl+NEW.o 2+2W+po+porlrl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+po+porlp+NEW.c
+awk -f show.awk R+po+porlp+NEW.s > R+po+porlp+NEW.t
+sh toh.sh R+po+porlp+NEW.t > R+po+porlp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+po+porlp+NEW.o R+po+porlp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+porlps+NEW.c
+awk -f show.awk 2+2W+porlps+NEW.s > 2+2W+porlps+NEW.t
+sh toh.sh 2+2W+porlps+NEW.t > 2+2W+porlps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+porlps+NEW.o 2+2W+porlps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+porlp+poprl+NEW.c
+awk -f show.awk S+porlp+poprl+NEW.s > S+porlp+poprl+NEW.t
+sh toh.sh S+porlp+poprl+NEW.t > S+porlp+poprl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+porlp+poprl+NEW.o S+porlp+poprl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+porlrl+poprl+NEW.c
+awk -f show.awk S+porlrl+poprl+NEW.s > S+porlrl+poprl+NEW.t
+sh toh.sh S+porlrl+poprl+NEW.t > S+porlrl+poprl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+porlrl+poprl+NEW.o S+porlrl+poprl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+poprl+porlp+NEW.c
+awk -f show.awk 2+2W+poprl+porlp+NEW.s > 2+2W+poprl+porlp+NEW.t
+sh toh.sh 2+2W+poprl+porlp+NEW.t > 2+2W+poprl+porlp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+poprl+porlp+NEW.o 2+2W+poprl+porlp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+poprl+porlrl+NEW.c
+awk -f show.awk 2+2W+poprl+porlrl+NEW.s > 2+2W+poprl+porlrl+NEW.t
+sh toh.sh 2+2W+poprl+porlrl+NEW.t > 2+2W+poprl+porlrl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+poprl+porlrl+NEW.o 2+2W+poprl+porlrl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+poprl+porlp+NEW.c
+awk -f show.awk R+poprl+porlp+NEW.s > R+poprl+porlp+NEW.t
+sh toh.sh R+poprl+porlp+NEW.t > R+poprl+porlp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+poprl+porlp+NEW.o R+poprl+porlp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+porlp+porlrl+NEW.c
+awk -f show.awk 2+2W+porlp+porlrl+NEW.s > 2+2W+porlp+porlrl+NEW.t
+sh toh.sh 2+2W+porlp+porlrl+NEW.t > 2+2W+porlp+porlrl+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+porlp+porlrl+NEW.o 2+2W+porlp+porlrl+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S 2+2W+porlrls+NEW.c
+awk -f show.awk 2+2W+porlrls+NEW.s > 2+2W+porlrls+NEW.t
+sh toh.sh 2+2W+porlrls+NEW.t > 2+2W+porlrls+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o 2+2W+porlrls+NEW.o 2+2W+porlrls+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+porlp+po+NEW.c
+awk -f show.awk MP+porlp+po+NEW.s > MP+porlp+po+NEW.t
+sh toh.sh MP+porlp+po+NEW.t > MP+porlp+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+porlp+po+NEW.o MP+porlp+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+porlrl+po+NEW.c
+awk -f show.awk MP+porlrl+po+NEW.s > MP+porlrl+po+NEW.t
+sh toh.sh MP+porlrl+po+NEW.t > MP+porlrl+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+porlrl+po+NEW.o MP+porlrl+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+porlp+po+NEW.c
+awk -f show.awk R+porlp+po+NEW.s > R+porlp+po+NEW.t
+sh toh.sh R+porlp+po+NEW.t > R+porlp+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+porlp+po+NEW.o R+porlp+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+porlrl+po+NEW.c
+awk -f show.awk R+porlrl+po+NEW.s > R+porlrl+po+NEW.t
+sh toh.sh R+porlrl+po+NEW.t > R+porlrl+po+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+porlrl+po+NEW.o R+porlrl+po+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+po+porlp+NEW.c
+awk -f show.awk SB+po+porlp+NEW.s > SB+po+porlp+NEW.t
+sh toh.sh SB+po+porlp+NEW.t > SB+po+porlp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+po+porlp+NEW.o SB+po+porlp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+porlps+NEW.c
+awk -f show.awk R+porlps+NEW.s > R+porlps+NEW.t
+sh toh.sh R+porlps+NEW.t > R+porlps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+porlps+NEW.o R+porlps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+porlrl+porlp+NEW.c
+awk -f show.awk R+porlrl+porlp+NEW.s > R+porlrl+porlp+NEW.t
+sh toh.sh R+porlrl+porlp+NEW.t > R+porlrl+porlp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+porlrl+porlp+NEW.o R+porlrl+porlp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+porlps+NEW.c
+awk -f show.awk SB+porlps+NEW.s > SB+porlps+NEW.t
+sh toh.sh SB+porlps+NEW.t > SB+porlps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+porlps+NEW.o SB+porlps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+po+popaq+NEW.c
+awk -f show.awk MP+po+popaq+NEW.s > MP+po+popaq+NEW.t
+sh toh.sh MP+po+popaq+NEW.t > MP+po+popaq+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+po+popaq+NEW.o MP+po+popaq+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+po+popaq+NEW.c
+awk -f show.awk R+po+popaq+NEW.s > R+po+popaq+NEW.t
+sh toh.sh R+po+popaq+NEW.t > R+po+popaq+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+po+popaq+NEW.o R+po+popaq+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+po+popaq+NEW.c
+awk -f show.awk SB+po+popaq+NEW.s > SB+po+popaq+NEW.t
+sh toh.sh SB+po+popaq+NEW.t > SB+po+popaq+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+po+popaq+NEW.o SB+po+popaq+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+popaqs+NEW.c
+awk -f show.awk SB+popaqs+NEW.s > SB+popaqs+NEW.t
+sh toh.sh SB+popaqs+NEW.t > SB+popaqs+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+popaqs+NEW.o SB+popaqs+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+po+poaqp+NEW.c
+awk -f show.awk LB+po+poaqp+NEW.s > LB+po+poaqp+NEW.t
+sh toh.sh LB+po+poaqp+NEW.t > LB+po+poaqp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+po+poaqp+NEW.o LB+po+poaqp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+poaqps+NEW.c
+awk -f show.awk LB+poaqps+NEW.s > LB+poaqps+NEW.t
+sh toh.sh LB+poaqps+NEW.t > LB+poaqps+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+poaqps+NEW.o LB+poaqps+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+po+poaqp+NEW.c
+awk -f show.awk S+po+poaqp+NEW.s > S+po+poaqp+NEW.t
+sh toh.sh S+po+poaqp+NEW.t > S+po+poaqp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+po+poaqp+NEW.o S+po+poaqp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+po+poaqp+NEW.c
+awk -f show.awk MP+po+poaqp+NEW.s > MP+po+poaqp+NEW.t
+sh toh.sh MP+po+poaqp+NEW.t > MP+po+poaqp+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+po+poaqp+NEW.o MP+po+poaqp+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+po+poaqaq+NEW.c
+awk -f show.awk MP+po+poaqaq+NEW.s > MP+po+poaqaq+NEW.t
+sh toh.sh MP+po+poaqaq+NEW.t > MP+po+poaqaq+NEW.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+po+poaqaq+NEW.o MP+po+poaqaq+NEW.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+ctrl-wsi-rfi-ctrl.c
+awk -f show.awk LB+ctrl+ctrl-wsi-rfi-ctrl.s > LB+ctrl+ctrl-wsi-rfi-ctrl.t
+sh toh.sh LB+ctrl+ctrl-wsi-rfi-ctrl.t > LB+ctrl+ctrl-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+ctrl-wsi-rfi-ctrl.o LB+ctrl+ctrl-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+ctrl-wsi-rfi-data.c
+awk -f show.awk LB+ctrl+ctrl-wsi-rfi-data.s > LB+ctrl+ctrl-wsi-rfi-data.t
+sh toh.sh LB+ctrl+ctrl-wsi-rfi-data.t > LB+ctrl+ctrl-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+ctrl-wsi-rfi-data.o LB+ctrl+ctrl-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+ctrl-wsi-rfi-addr.c
+awk -f show.awk LB+ctrl+ctrl-wsi-rfi-addr.s > LB+ctrl+ctrl-wsi-rfi-addr.t
+sh toh.sh LB+ctrl+ctrl-wsi-rfi-addr.t > LB+ctrl+ctrl-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+ctrl-wsi-rfi-addr.o LB+ctrl+ctrl-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+ctrl-wsi-rfi-ctrl.c
+awk -f show.awk LB+data+ctrl-wsi-rfi-ctrl.s > LB+data+ctrl-wsi-rfi-ctrl.t
+sh toh.sh LB+data+ctrl-wsi-rfi-ctrl.t > LB+data+ctrl-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+ctrl-wsi-rfi-ctrl.o LB+data+ctrl-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+ctrl-wsi-rfi-data.c
+awk -f show.awk LB+data+ctrl-wsi-rfi-data.s > LB+data+ctrl-wsi-rfi-data.t
+sh toh.sh LB+data+ctrl-wsi-rfi-data.t > LB+data+ctrl-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+ctrl-wsi-rfi-data.o LB+data+ctrl-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+ctrl-wsi-rfi-addr.c
+awk -f show.awk LB+data+ctrl-wsi-rfi-addr.s > LB+data+ctrl-wsi-rfi-addr.t
+sh toh.sh LB+data+ctrl-wsi-rfi-addr.t > LB+data+ctrl-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+ctrl-wsi-rfi-addr.o LB+data+ctrl-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+ctrl-wsi-rfi-ctrl.c
+awk -f show.awk LB+addr+ctrl-wsi-rfi-ctrl.s > LB+addr+ctrl-wsi-rfi-ctrl.t
+sh toh.sh LB+addr+ctrl-wsi-rfi-ctrl.t > LB+addr+ctrl-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+ctrl-wsi-rfi-ctrl.o LB+addr+ctrl-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+ctrl-wsi-rfi-data.c
+awk -f show.awk LB+addr+ctrl-wsi-rfi-data.s > LB+addr+ctrl-wsi-rfi-data.t
+sh toh.sh LB+addr+ctrl-wsi-rfi-data.t > LB+addr+ctrl-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+ctrl-wsi-rfi-data.o LB+addr+ctrl-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+ctrl-wsi-rfi-addr.c
+awk -f show.awk LB+addr+ctrl-wsi-rfi-addr.s > LB+addr+ctrl-wsi-rfi-addr.t
+sh toh.sh LB+addr+ctrl-wsi-rfi-addr.t > LB+addr+ctrl-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+ctrl-wsi-rfi-addr.o LB+addr+ctrl-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+ctrl-wsi-rfi-ctrl.c
+awk -f show.awk LB+fence.rw.rw+ctrl-wsi-rfi-ctrl.s > LB+fence.rw.rw+ctrl-wsi-rfi-ctrl.t
+sh toh.sh LB+fence.rw.rw+ctrl-wsi-rfi-ctrl.t > LB+fence.rw.rw+ctrl-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+ctrl-wsi-rfi-ctrl.o LB+fence.rw.rw+ctrl-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+ctrl-wsi-rfi-data.c
+awk -f show.awk LB+fence.rw.rw+ctrl-wsi-rfi-data.s > LB+fence.rw.rw+ctrl-wsi-rfi-data.t
+sh toh.sh LB+fence.rw.rw+ctrl-wsi-rfi-data.t > LB+fence.rw.rw+ctrl-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+ctrl-wsi-rfi-data.o LB+fence.rw.rw+ctrl-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+ctrl-wsi-rfi-addr.c
+awk -f show.awk LB+fence.rw.rw+ctrl-wsi-rfi-addr.s > LB+fence.rw.rw+ctrl-wsi-rfi-addr.t
+sh toh.sh LB+fence.rw.rw+ctrl-wsi-rfi-addr.t > LB+fence.rw.rw+ctrl-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+ctrl-wsi-rfi-addr.o LB+fence.rw.rw+ctrl-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+ctrl-wsi-rfi-ctrl.c
+awk -f show.awk S+fence.rw.rw+ctrl-wsi-rfi-ctrl.s > S+fence.rw.rw+ctrl-wsi-rfi-ctrl.t
+sh toh.sh S+fence.rw.rw+ctrl-wsi-rfi-ctrl.t > S+fence.rw.rw+ctrl-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+ctrl-wsi-rfi-ctrl.o S+fence.rw.rw+ctrl-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+ctrl-wsi-rfi-data.c
+awk -f show.awk S+fence.rw.rw+ctrl-wsi-rfi-data.s > S+fence.rw.rw+ctrl-wsi-rfi-data.t
+sh toh.sh S+fence.rw.rw+ctrl-wsi-rfi-data.t > S+fence.rw.rw+ctrl-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+ctrl-wsi-rfi-data.o S+fence.rw.rw+ctrl-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+ctrl-wsi-rfi-addr.c
+awk -f show.awk S+fence.rw.rw+ctrl-wsi-rfi-addr.s > S+fence.rw.rw+ctrl-wsi-rfi-addr.t
+sh toh.sh S+fence.rw.rw+ctrl-wsi-rfi-addr.t > S+fence.rw.rw+ctrl-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+ctrl-wsi-rfi-addr.o S+fence.rw.rw+ctrl-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.rw.rw+ctrl-wsi-rfi-ctrl.c
+awk -f show.awk MP+fence.rw.rw+ctrl-wsi-rfi-ctrl.s > MP+fence.rw.rw+ctrl-wsi-rfi-ctrl.t
+sh toh.sh MP+fence.rw.rw+ctrl-wsi-rfi-ctrl.t > MP+fence.rw.rw+ctrl-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.rw.rw+ctrl-wsi-rfi-ctrl.o MP+fence.rw.rw+ctrl-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.rw.rw+ctrl-wsi-rfi-addr.c
+awk -f show.awk MP+fence.rw.rw+ctrl-wsi-rfi-addr.s > MP+fence.rw.rw+ctrl-wsi-rfi-addr.t
+sh toh.sh MP+fence.rw.rw+ctrl-wsi-rfi-addr.t > MP+fence.rw.rw+ctrl-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.rw.rw+ctrl-wsi-rfi-addr.o MP+fence.rw.rw+ctrl-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+data-wsi-rfi-ctrl.c
+awk -f show.awk LB+ctrl+data-wsi-rfi-ctrl.s > LB+ctrl+data-wsi-rfi-ctrl.t
+sh toh.sh LB+ctrl+data-wsi-rfi-ctrl.t > LB+ctrl+data-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+data-wsi-rfi-ctrl.o LB+ctrl+data-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+data-wsi-rfi-data.c
+awk -f show.awk LB+ctrl+data-wsi-rfi-data.s > LB+ctrl+data-wsi-rfi-data.t
+sh toh.sh LB+ctrl+data-wsi-rfi-data.t > LB+ctrl+data-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+data-wsi-rfi-data.o LB+ctrl+data-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+data-wsi-rfi-addr.c
+awk -f show.awk LB+ctrl+data-wsi-rfi-addr.s > LB+ctrl+data-wsi-rfi-addr.t
+sh toh.sh LB+ctrl+data-wsi-rfi-addr.t > LB+ctrl+data-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+data-wsi-rfi-addr.o LB+ctrl+data-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+data-wsi-rfi-ctrl.c
+awk -f show.awk LB+data+data-wsi-rfi-ctrl.s > LB+data+data-wsi-rfi-ctrl.t
+sh toh.sh LB+data+data-wsi-rfi-ctrl.t > LB+data+data-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+data-wsi-rfi-ctrl.o LB+data+data-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+data-wsi-rfi-data.c
+awk -f show.awk LB+data+data-wsi-rfi-data.s > LB+data+data-wsi-rfi-data.t
+sh toh.sh LB+data+data-wsi-rfi-data.t > LB+data+data-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+data-wsi-rfi-data.o LB+data+data-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+data-wsi-rfi-addr.c
+awk -f show.awk LB+data+data-wsi-rfi-addr.s > LB+data+data-wsi-rfi-addr.t
+sh toh.sh LB+data+data-wsi-rfi-addr.t > LB+data+data-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+data-wsi-rfi-addr.o LB+data+data-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+data-wsi-rfi-ctrl.c
+awk -f show.awk LB+addr+data-wsi-rfi-ctrl.s > LB+addr+data-wsi-rfi-ctrl.t
+sh toh.sh LB+addr+data-wsi-rfi-ctrl.t > LB+addr+data-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+data-wsi-rfi-ctrl.o LB+addr+data-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+data-wsi-rfi-data.c
+awk -f show.awk LB+addr+data-wsi-rfi-data.s > LB+addr+data-wsi-rfi-data.t
+sh toh.sh LB+addr+data-wsi-rfi-data.t > LB+addr+data-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+data-wsi-rfi-data.o LB+addr+data-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+data-wsi-rfi-addr.c
+awk -f show.awk LB+addr+data-wsi-rfi-addr.s > LB+addr+data-wsi-rfi-addr.t
+sh toh.sh LB+addr+data-wsi-rfi-addr.t > LB+addr+data-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+data-wsi-rfi-addr.o LB+addr+data-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+data-wsi-rfi-ctrl.c
+awk -f show.awk LB+fence.rw.rw+data-wsi-rfi-ctrl.s > LB+fence.rw.rw+data-wsi-rfi-ctrl.t
+sh toh.sh LB+fence.rw.rw+data-wsi-rfi-ctrl.t > LB+fence.rw.rw+data-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+data-wsi-rfi-ctrl.o LB+fence.rw.rw+data-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+data-wsi-rfi-data.c
+awk -f show.awk LB+fence.rw.rw+data-wsi-rfi-data.s > LB+fence.rw.rw+data-wsi-rfi-data.t
+sh toh.sh LB+fence.rw.rw+data-wsi-rfi-data.t > LB+fence.rw.rw+data-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+data-wsi-rfi-data.o LB+fence.rw.rw+data-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+data-wsi-rfi-addr.c
+awk -f show.awk LB+fence.rw.rw+data-wsi-rfi-addr.s > LB+fence.rw.rw+data-wsi-rfi-addr.t
+sh toh.sh LB+fence.rw.rw+data-wsi-rfi-addr.t > LB+fence.rw.rw+data-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+data-wsi-rfi-addr.o LB+fence.rw.rw+data-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+data-wsi-rfi-ctrl.c
+awk -f show.awk S+fence.rw.rw+data-wsi-rfi-ctrl.s > S+fence.rw.rw+data-wsi-rfi-ctrl.t
+sh toh.sh S+fence.rw.rw+data-wsi-rfi-ctrl.t > S+fence.rw.rw+data-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+data-wsi-rfi-ctrl.o S+fence.rw.rw+data-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+data-wsi-rfi-data.c
+awk -f show.awk S+fence.rw.rw+data-wsi-rfi-data.s > S+fence.rw.rw+data-wsi-rfi-data.t
+sh toh.sh S+fence.rw.rw+data-wsi-rfi-data.t > S+fence.rw.rw+data-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+data-wsi-rfi-data.o S+fence.rw.rw+data-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+data-wsi-rfi-addr.c
+awk -f show.awk S+fence.rw.rw+data-wsi-rfi-addr.s > S+fence.rw.rw+data-wsi-rfi-addr.t
+sh toh.sh S+fence.rw.rw+data-wsi-rfi-addr.t > S+fence.rw.rw+data-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+data-wsi-rfi-addr.o S+fence.rw.rw+data-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.rw.rw+data-wsi-rfi-ctrl.c
+awk -f show.awk MP+fence.rw.rw+data-wsi-rfi-ctrl.s > MP+fence.rw.rw+data-wsi-rfi-ctrl.t
+sh toh.sh MP+fence.rw.rw+data-wsi-rfi-ctrl.t > MP+fence.rw.rw+data-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.rw.rw+data-wsi-rfi-ctrl.o MP+fence.rw.rw+data-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.rw.rw+data-wsi-rfi-addr.c
+awk -f show.awk MP+fence.rw.rw+data-wsi-rfi-addr.s > MP+fence.rw.rw+data-wsi-rfi-addr.t
+sh toh.sh MP+fence.rw.rw+data-wsi-rfi-addr.t > MP+fence.rw.rw+data-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.rw.rw+data-wsi-rfi-addr.o MP+fence.rw.rw+data-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+addr-wsi-rfi-ctrl.c
+awk -f show.awk LB+ctrl+addr-wsi-rfi-ctrl.s > LB+ctrl+addr-wsi-rfi-ctrl.t
+sh toh.sh LB+ctrl+addr-wsi-rfi-ctrl.t > LB+ctrl+addr-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+addr-wsi-rfi-ctrl.o LB+ctrl+addr-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+addr-wsi-rfi-data.c
+awk -f show.awk LB+ctrl+addr-wsi-rfi-data.s > LB+ctrl+addr-wsi-rfi-data.t
+sh toh.sh LB+ctrl+addr-wsi-rfi-data.t > LB+ctrl+addr-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+addr-wsi-rfi-data.o LB+ctrl+addr-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+addr-wsi-rfi-addr.c
+awk -f show.awk LB+ctrl+addr-wsi-rfi-addr.s > LB+ctrl+addr-wsi-rfi-addr.t
+sh toh.sh LB+ctrl+addr-wsi-rfi-addr.t > LB+ctrl+addr-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+addr-wsi-rfi-addr.o LB+ctrl+addr-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+addr-wsi-rfi-ctrl.c
+awk -f show.awk LB+data+addr-wsi-rfi-ctrl.s > LB+data+addr-wsi-rfi-ctrl.t
+sh toh.sh LB+data+addr-wsi-rfi-ctrl.t > LB+data+addr-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+addr-wsi-rfi-ctrl.o LB+data+addr-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+addr-wsi-rfi-data.c
+awk -f show.awk LB+data+addr-wsi-rfi-data.s > LB+data+addr-wsi-rfi-data.t
+sh toh.sh LB+data+addr-wsi-rfi-data.t > LB+data+addr-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+addr-wsi-rfi-data.o LB+data+addr-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+data+addr-wsi-rfi-addr.c
+awk -f show.awk LB+data+addr-wsi-rfi-addr.s > LB+data+addr-wsi-rfi-addr.t
+sh toh.sh LB+data+addr-wsi-rfi-addr.t > LB+data+addr-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+data+addr-wsi-rfi-addr.o LB+data+addr-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+addr-wsi-rfi-ctrl.c
+awk -f show.awk LB+addr+addr-wsi-rfi-ctrl.s > LB+addr+addr-wsi-rfi-ctrl.t
+sh toh.sh LB+addr+addr-wsi-rfi-ctrl.t > LB+addr+addr-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+addr-wsi-rfi-ctrl.o LB+addr+addr-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+addr-wsi-rfi-data.c
+awk -f show.awk LB+addr+addr-wsi-rfi-data.s > LB+addr+addr-wsi-rfi-data.t
+sh toh.sh LB+addr+addr-wsi-rfi-data.t > LB+addr+addr-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+addr-wsi-rfi-data.o LB+addr+addr-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+addr+addr-wsi-rfi-addr.c
+awk -f show.awk LB+addr+addr-wsi-rfi-addr.s > LB+addr+addr-wsi-rfi-addr.t
+sh toh.sh LB+addr+addr-wsi-rfi-addr.t > LB+addr+addr-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+addr+addr-wsi-rfi-addr.o LB+addr+addr-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+addr-wsi-rfi-ctrl.c
+awk -f show.awk LB+fence.rw.rw+addr-wsi-rfi-ctrl.s > LB+fence.rw.rw+addr-wsi-rfi-ctrl.t
+sh toh.sh LB+fence.rw.rw+addr-wsi-rfi-ctrl.t > LB+fence.rw.rw+addr-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+addr-wsi-rfi-ctrl.o LB+fence.rw.rw+addr-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+addr-wsi-rfi-data.c
+awk -f show.awk LB+fence.rw.rw+addr-wsi-rfi-data.s > LB+fence.rw.rw+addr-wsi-rfi-data.t
+sh toh.sh LB+fence.rw.rw+addr-wsi-rfi-data.t > LB+fence.rw.rw+addr-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+addr-wsi-rfi-data.o LB+fence.rw.rw+addr-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+fence.rw.rw+addr-wsi-rfi-addr.c
+awk -f show.awk LB+fence.rw.rw+addr-wsi-rfi-addr.s > LB+fence.rw.rw+addr-wsi-rfi-addr.t
+sh toh.sh LB+fence.rw.rw+addr-wsi-rfi-addr.t > LB+fence.rw.rw+addr-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+fence.rw.rw+addr-wsi-rfi-addr.o LB+fence.rw.rw+addr-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+addr-wsi-rfi-ctrl.c
+awk -f show.awk S+fence.rw.rw+addr-wsi-rfi-ctrl.s > S+fence.rw.rw+addr-wsi-rfi-ctrl.t
+sh toh.sh S+fence.rw.rw+addr-wsi-rfi-ctrl.t > S+fence.rw.rw+addr-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+addr-wsi-rfi-ctrl.o S+fence.rw.rw+addr-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+addr-wsi-rfi-data.c
+awk -f show.awk S+fence.rw.rw+addr-wsi-rfi-data.s > S+fence.rw.rw+addr-wsi-rfi-data.t
+sh toh.sh S+fence.rw.rw+addr-wsi-rfi-data.t > S+fence.rw.rw+addr-wsi-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+addr-wsi-rfi-data.o S+fence.rw.rw+addr-wsi-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S S+fence.rw.rw+addr-wsi-rfi-addr.c
+awk -f show.awk S+fence.rw.rw+addr-wsi-rfi-addr.s > S+fence.rw.rw+addr-wsi-rfi-addr.t
+sh toh.sh S+fence.rw.rw+addr-wsi-rfi-addr.t > S+fence.rw.rw+addr-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o S+fence.rw.rw+addr-wsi-rfi-addr.o S+fence.rw.rw+addr-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.rw.rw+addr-wsi-rfi-ctrl.c
+awk -f show.awk MP+fence.rw.rw+addr-wsi-rfi-ctrl.s > MP+fence.rw.rw+addr-wsi-rfi-ctrl.t
+sh toh.sh MP+fence.rw.rw+addr-wsi-rfi-ctrl.t > MP+fence.rw.rw+addr-wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.rw.rw+addr-wsi-rfi-ctrl.o MP+fence.rw.rw+addr-wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+fence.rw.rw+addr-wsi-rfi-addr.c
+awk -f show.awk MP+fence.rw.rw+addr-wsi-rfi-addr.s > MP+fence.rw.rw+addr-wsi-rfi-addr.t
+sh toh.sh MP+fence.rw.rw+addr-wsi-rfi-addr.t > MP+fence.rw.rw+addr-wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+fence.rw.rw+addr-wsi-rfi-addr.o MP+fence.rw.rw+addr-wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-ctrl+ctrl.c
+awk -f show.awk MP+wsi-rfi-ctrl+ctrl.s > MP+wsi-rfi-ctrl+ctrl.t
+sh toh.sh MP+wsi-rfi-ctrl+ctrl.t > MP+wsi-rfi-ctrl+ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-ctrl+ctrl.o MP+wsi-rfi-ctrl+ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-data+ctrl.c
+awk -f show.awk MP+wsi-rfi-data+ctrl.s > MP+wsi-rfi-data+ctrl.t
+sh toh.sh MP+wsi-rfi-data+ctrl.t > MP+wsi-rfi-data+ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-data+ctrl.o MP+wsi-rfi-data+ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-addr+ctrl.c
+awk -f show.awk MP+wsi-rfi-addr+ctrl.s > MP+wsi-rfi-addr+ctrl.t
+sh toh.sh MP+wsi-rfi-addr+ctrl.t > MP+wsi-rfi-addr+ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-addr+ctrl.o MP+wsi-rfi-addr+ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+wsi-rfi-ctrls.c
+awk -f show.awk SB+wsi-rfi-ctrls.s > SB+wsi-rfi-ctrls.t
+sh toh.sh SB+wsi-rfi-ctrls.t > SB+wsi-rfi-ctrls.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+wsi-rfi-ctrls.o SB+wsi-rfi-ctrls.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-ctrl+addr.c
+awk -f show.awk MP+wsi-rfi-ctrl+addr.s > MP+wsi-rfi-ctrl+addr.t
+sh toh.sh MP+wsi-rfi-ctrl+addr.t > MP+wsi-rfi-ctrl+addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-ctrl+addr.o MP+wsi-rfi-ctrl+addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-data+addr.c
+awk -f show.awk MP+wsi-rfi-data+addr.s > MP+wsi-rfi-data+addr.t
+sh toh.sh MP+wsi-rfi-data+addr.t > MP+wsi-rfi-data+addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-data+addr.o MP+wsi-rfi-data+addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-addr+addr.c
+awk -f show.awk MP+wsi-rfi-addr+addr.s > MP+wsi-rfi-addr+addr.t
+sh toh.sh MP+wsi-rfi-addr+addr.t > MP+wsi-rfi-addr+addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-addr+addr.o MP+wsi-rfi-addr+addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+wsi-rfi-addr+wsi-rfi-ctrl.c
+awk -f show.awk SB+wsi-rfi-addr+wsi-rfi-ctrl.s > SB+wsi-rfi-addr+wsi-rfi-ctrl.t
+sh toh.sh SB+wsi-rfi-addr+wsi-rfi-ctrl.t > SB+wsi-rfi-addr+wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+wsi-rfi-addr+wsi-rfi-ctrl.o SB+wsi-rfi-addr+wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+wsi-rfi-addrs.c
+awk -f show.awk SB+wsi-rfi-addrs.s > SB+wsi-rfi-addrs.t
+sh toh.sh SB+wsi-rfi-addrs.t > SB+wsi-rfi-addrs.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+wsi-rfi-addrs.o SB+wsi-rfi-addrs.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-ctrl+fence.rw.rw.c
+awk -f show.awk MP+wsi-rfi-ctrl+fence.rw.rw.s > MP+wsi-rfi-ctrl+fence.rw.rw.t
+sh toh.sh MP+wsi-rfi-ctrl+fence.rw.rw.t > MP+wsi-rfi-ctrl+fence.rw.rw.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-ctrl+fence.rw.rw.o MP+wsi-rfi-ctrl+fence.rw.rw.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-data+fence.rw.rw.c
+awk -f show.awk MP+wsi-rfi-data+fence.rw.rw.s > MP+wsi-rfi-data+fence.rw.rw.t
+sh toh.sh MP+wsi-rfi-data+fence.rw.rw.t > MP+wsi-rfi-data+fence.rw.rw.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-data+fence.rw.rw.o MP+wsi-rfi-data+fence.rw.rw.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S MP+wsi-rfi-addr+fence.rw.rw.c
+awk -f show.awk MP+wsi-rfi-addr+fence.rw.rw.s > MP+wsi-rfi-addr+fence.rw.rw.t
+sh toh.sh MP+wsi-rfi-addr+fence.rw.rw.t > MP+wsi-rfi-addr+fence.rw.rw.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o MP+wsi-rfi-addr+fence.rw.rw.o MP+wsi-rfi-addr+fence.rw.rw.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+wsi-rfi-ctrl+fence.rw.rw.c
+awk -f show.awk R+wsi-rfi-ctrl+fence.rw.rw.s > R+wsi-rfi-ctrl+fence.rw.rw.t
+sh toh.sh R+wsi-rfi-ctrl+fence.rw.rw.t > R+wsi-rfi-ctrl+fence.rw.rw.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+wsi-rfi-ctrl+fence.rw.rw.o R+wsi-rfi-ctrl+fence.rw.rw.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+wsi-rfi-data+fence.rw.rw.c
+awk -f show.awk R+wsi-rfi-data+fence.rw.rw.s > R+wsi-rfi-data+fence.rw.rw.t
+sh toh.sh R+wsi-rfi-data+fence.rw.rw.t > R+wsi-rfi-data+fence.rw.rw.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+wsi-rfi-data+fence.rw.rw.o R+wsi-rfi-data+fence.rw.rw.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S R+wsi-rfi-addr+fence.rw.rw.c
+awk -f show.awk R+wsi-rfi-addr+fence.rw.rw.s > R+wsi-rfi-addr+fence.rw.rw.t
+sh toh.sh R+wsi-rfi-addr+fence.rw.rw.t > R+wsi-rfi-addr+fence.rw.rw.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o R+wsi-rfi-addr+fence.rw.rw.o R+wsi-rfi-addr+fence.rw.rw.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.rw.rw+wsi-rfi-ctrl.c
+awk -f show.awk SB+fence.rw.rw+wsi-rfi-ctrl.s > SB+fence.rw.rw+wsi-rfi-ctrl.t
+sh toh.sh SB+fence.rw.rw+wsi-rfi-ctrl.t > SB+fence.rw.rw+wsi-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.rw.rw+wsi-rfi-ctrl.o SB+fence.rw.rw+wsi-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S SB+fence.rw.rw+wsi-rfi-addr.c
+awk -f show.awk SB+fence.rw.rw+wsi-rfi-addr.s > SB+fence.rw.rw+wsi-rfi-addr.t
+sh toh.sh SB+fence.rw.rw+wsi-rfi-addr.t > SB+fence.rw.rw+wsi-rfi-addr.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o SB+fence.rw.rw+wsi-rfi-addr.o SB+fence.rw.rw+wsi-rfi-addr.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+ctrl-fri-rfi-ctrl.c
+awk -f show.awk LB+ctrl+ctrl-fri-rfi-ctrl.s > LB+ctrl+ctrl-fri-rfi-ctrl.t
+sh toh.sh LB+ctrl+ctrl-fri-rfi-ctrl.t > LB+ctrl+ctrl-fri-rfi-ctrl.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+ctrl-fri-rfi-ctrl.o LB+ctrl+ctrl-fri-rfi-ctrl.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+ctrl-fri-rfi-data.c
+awk -f show.awk LB+ctrl+ctrl-fri-rfi-data.s > LB+ctrl+ctrl-fri-rfi-data.t
+sh toh.sh LB+ctrl+ctrl-fri-rfi-data.t > LB+ctrl+ctrl-fri-rfi-data.h
+riscv64-linux-gnu-gcc -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -static -c -o LB+ctrl+ctrl-fri-rfi-data.o LB+ctrl+ctrl-fri-rfi-data.c
+riscv64-linux-gnu-gcc -DASS -D_GNU_SOURCE -DFORCE_AFFINITY -Wall -std=gnu99 -O2 -pthread -S LB+ctrl+ctrl-fri-rfi-addr.c
