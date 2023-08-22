@@ -1,0 +1,10 @@
+#START _litmus_P1
+	sw a1,0(a5)
+	lw ra,0(a4)
+	xor t5,ra,ra
+	add t4,a4,t5
+	lw a0,0(t4)
+#START _litmus_P0
+	sw a1,0(a5)
+	fence w,w
+	sw a1,0(a4)

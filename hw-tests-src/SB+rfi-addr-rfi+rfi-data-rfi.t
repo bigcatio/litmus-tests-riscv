@@ -1,0 +1,14 @@
+#START _litmus_P1
+	sw a1,0(a5)
+	lw a0,0(a5)
+	xor t5,a0,a0
+	ori t5,t5,1
+	sw t5,0(a4)
+	lw a6,0(a4)
+#START _litmus_P0
+	sw a0,0(a5)
+	lw a6,0(a5)
+	xor s1,a6,a6
+	add t6,a4,s1
+	sw a2,0(t6)
+	lw a7,0(a4)
